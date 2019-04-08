@@ -1,13 +1,13 @@
-package genutil_test
+package strtype_test
 
 import (
 	"testing"
 
-	genutil "github.com/hori-ryota/go-genutil"
+	"github.com/hori-ryota/go-genutil/strtype"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGoStringTypesConverter(t *testing.T) {
+func TestToConverter(t *testing.T) {
 	for _, tt := range []struct {
 		paramType string
 		want      string
@@ -110,7 +110,7 @@ func TestGoStringTypesConverter(t *testing.T) {
 	} {
 		tt := tt
 		t.Run(tt.paramType, func(t *testing.T) {
-			assert.Equal(t, tt.want, genutil.GoStringTypesConverter(tt.paramType, "param"))
+			assert.Equal(t, tt.want, strtype.ToConverter(tt.paramType, "param"))
 		})
 	}
 }

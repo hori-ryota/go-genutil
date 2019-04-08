@@ -3,7 +3,7 @@ package genutil_test
 import (
 	"testing"
 
-	genutil "github.com/hori-ryota/go-genutil"
+	"github.com/hori-ryota/go-genutil/genutil"
 	"github.com/stretchr/testify/assert"
 )
 

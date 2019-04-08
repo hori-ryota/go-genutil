@@ -1,8 +1,8 @@
-package genutil
+package strtype
 
 import "fmt"
 
-func GoStringTypesConverter(paramType string, paramName string) string {
+func ToConverter(paramType string, paramName string) string {
 	switch paramType {
 	case "map[string]string":
 		return fmt.Sprintf(`func(s map[string]string) []string {

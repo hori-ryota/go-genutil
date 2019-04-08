@@ -1,11 +1,11 @@
-package genutil
+package strtype
 
 import (
 	"fmt"
 	"strings"
 )
 
-func GoStringTypesParser(paramType string, paramName string) string {
+func ToParser(paramType string, paramName string) string {
 	switch paramType {
 	case "map[string]string":
 		return fmt.Sprintf(`func(ss []string) (%s, error) {
