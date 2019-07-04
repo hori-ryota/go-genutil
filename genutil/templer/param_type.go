@@ -52,4 +52,6 @@ type ChannelType struct {
 	typeKind  TypeKind `required:"TypeKindChannel" getter:""`
 	itemType  Type     `required:"" getter:""`
 	isPointer bool     `getter:"" setter:""`
+	readonly  bool     `getter:"" setter:""`
+	writeonly bool     `getter:"" setter:""`
 }

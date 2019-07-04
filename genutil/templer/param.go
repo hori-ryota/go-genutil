@@ -6,11 +6,6 @@ import (
 )
 
 //genconstructor
-type RootParam struct {
-	types []Type `required:"" getter:""`
-}
-
-//genconstructor
 type Package struct {
 	name string `required:"" getter:""`
 	path string `required:"" getter:""`
@@ -33,6 +28,7 @@ type Param struct {
 	typ  Type   `required:"" getter:"Type"`
 }
 
+//genconstructor
 type Field struct {
 	Param   `required:""`
 	isEmbed bool `getter:"" setter:""`

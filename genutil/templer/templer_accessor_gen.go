@@ -2,10 +2,6 @@
 
 package templer
 
-func (m RootParam) Types() []Type {
-	return m.types
-}
-
 func (m Package) Name() string {
 	return m.name
 }
@@ -44,6 +40,10 @@ func (m Method) Args() []Arg {
 
 func (m Method) Responses() []Param {
 	return m.responses
+}
+
+func (m RootParam) Types() []Type {
+	return m.types
 }
 
 func (m PrimitiveType) TypeKind() TypeKind {
@@ -140,4 +140,20 @@ func (m ChannelType) IsPointer() bool {
 
 func (m *ChannelType) SetIsPointer(s bool) {
 	m.isPointer = s
+}
+
+func (m ChannelType) Readonly() bool {
+	return m.readonly
+}
+
+func (m *ChannelType) SetReadonly(s bool) {
+	m.readonly = s
+}
+
+func (m ChannelType) Writeonly() bool {
+	return m.writeonly
+}
+
+func (m *ChannelType) SetWriteonly(s bool) {
+	m.writeonly = s
 }

@@ -2,14 +2,6 @@
 
 package templer
 
-func NewRootParam(
-	types []Type,
-) RootParam {
-	return RootParam{
-		types: types,
-	}
-}
-
 func NewPackage(
 	name string,
 	path string,
@@ -30,15 +22,19 @@ func NewParam(
 	}
 }
 
+func NewField(
+	param Param,
+) Field {
+	return Field{
+		Param: param,
+	}
+}
+
 func NewArg(
-	name string,
-	typ Type,
+	param Param,
 ) Arg {
 	return Arg{
-		Param: Param{
-			name: name,
-			typ:  typ,
-		},
+		Param: param,
 	}
 }
 
@@ -49,6 +45,14 @@ func NewMethod(
 	return Method{
 		args:      args,
 		responses: responses,
+	}
+}
+
+func NewRootParam(
+	types []Type,
+) RootParam {
+	return RootParam{
+		types: types,
 	}
 }
 
