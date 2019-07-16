@@ -32,7 +32,7 @@ func ToConverter(paramType string, paramName string) string {
 	case "float32", "float64":
 		return fmt.Sprintf(`fmt.Sprint(%s)`, paramName)
 	case "[]string":
-		return fmt.Sprintf(`%s`, paramName)
+		return paramName
 	case "[]int", "[]int8", "[]int16", "[]int32":
 		return fmt.Sprintf(`func(ss %s) []string {
 					dst := make([]string, len(ss))
@@ -78,7 +78,7 @@ func ToConverter(paramType string, paramName string) string {
 			paramName,
 		)
 	case "string":
-		return fmt.Sprintf(`%s`, paramName)
+		return paramName
 	default:
 		return fmt.Sprintf(`fmt.Sprint(%s)`, paramName)
 	}
