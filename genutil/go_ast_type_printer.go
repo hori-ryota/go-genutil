@@ -67,7 +67,7 @@ func resolveTypeFullString(importMap map[string]string, currentPkg string, typeN
 	default:
 		ss := strings.SplitN(word, ".", 2)
 		if pkgPath, ok := importMap[ss[0]]; ok {
-			word = pkgPath + ss[1]
+			word = pkgPath + "." + ss[1]
 		}
 	}
 
