@@ -19,7 +19,7 @@ func TestGoFmtImports(t *testing.T) {
 			want: ``,
 		},
 		{
-			name: "only standard pacakge",
+			name: "only standard package",
 			src: map[string]string{
 				"fmt":   "fmt",
 				"bytes": "bytes",

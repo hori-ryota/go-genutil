@@ -13,10 +13,13 @@ func LocalPathToPackagePath(s string) (string, error) {
 		return "", err
 	}
 
+	s = filepath.ToSlash(s)
+
 	for _, srcDir := range build.Default.SrcDirs() {
+		srcDir = filepath.ToSlash(srcDir)
 		prefix := srcDir + "/"
 		if strings.HasPrefix(s, prefix) {
-			return filepath.ToSlash(strings.TrimPrefix(s, prefix)), nil
+			return strings.TrimPrefix(s, prefix), nil
 		}
 	}
 	return "", errors.New("failed to resolve package path")
