@@ -44,7 +44,7 @@ func resolveTypeFullString(importMap map[string]string, currentPkg string, typeN
 		return "", nil
 	}
 
-	ind := strings.IndexAny(typeName, "-<> []")
+	ind := strings.IndexAny(typeName, "<> []{}*")
 	switch ind {
 	case 0:
 		ind = 1
@@ -99,7 +99,7 @@ func (p TypePrinter) print(fullPath string, currentPkg string) string {
 		return ""
 	}
 
-	ind := strings.IndexAny(fullPath, "-<> []")
+	ind := strings.IndexAny(fullPath, "<> []{}*")
 	switch ind {
 	case 0:
 		ind = 1
@@ -109,7 +109,7 @@ func (p TypePrinter) print(fullPath string, currentPkg string) string {
 
 	word := fullPath[:ind]
 
-	if path.Dir(word) == currentPkg {
+	if strings.TrimSuffix(word, path.Ext(word)) == currentPkg {
 		word = strings.TrimPrefix(path.Ext(word), ".")
 	}
 
@@ -120,13 +120,17 @@ func (p TypePrinter) ImportPkgs(currentPkg string) []string {
 	pkgs := make([]string, 0, 2)
 
 	ss := strings.FieldsFunc(p.FullString, func(c rune) bool {
-		return !unicode.IsLetter(c) && c != '.' && c != '/'
+		return !unicode.IsLetter(c) && c != '.' && c != '/' && c != '-' && c != '_'
 	})
 	for _, s := range ss {
 		if !strings.ContainsRune(s, '.') {
 			continue
 		}
-		pkgs = append(pkgs, strings.SplitN(s, ".", 2)[0])
+		pkgPath := strings.TrimSuffix(s, path.Ext(s))
+		if currentPkg == pkgPath {
+			continue
+		}
+		pkgs = append(pkgs, pkgPath)
 	}
 	return pkgs
 }

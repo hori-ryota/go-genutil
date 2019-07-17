@@ -44,7 +44,8 @@ func ParseAstPkg(fset *token.FileSet, pkg *ast.Package) (AstPkgWalker, error) {
 	for _, file := range pkg.Files {
 		aFilePath = fset.File(file.Package).Name()
 	}
-	pkgPath, err := LocalPathToPackagePath(aFilePath)
+
+	pkgPath, err := LocalPathToPackagePath(filepath.Dir(aFilePath))
 	if err != nil {
 		return AstPkgWalker{}, err
 	}
