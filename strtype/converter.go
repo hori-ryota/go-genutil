@@ -83,3 +83,36 @@ func ToConverter(paramType string, paramName string) string {
 		return fmt.Sprintf(`fmt.Sprint(%s)`, paramName)
 	}
 }
+
+func ImportsForConverter(paramType string) []string {
+	switch paramType {
+	case "map[string]string":
+		return []string{"sort"}
+	case "bool":
+		return []string{"strconv"}
+	case "int", "int8", "int16", "int32":
+		return []string{"strconv"}
+	case "int64":
+		return []string{"strconv"}
+	case "uint", "uint8", "uint16", "uint32":
+		return []string{"strconv"}
+	case "uint64":
+		return []string{"strconv"}
+	case "float32", "float64":
+		return []string{"fmt"}
+	case "[]string":
+		return []string{"fmt"}
+	case "[]int", "[]int8", "[]int16", "[]int32":
+		return []string{"strconv"}
+	case "[]int64":
+		return []string{"strconv"}
+	case "[]uint", "[]uint8", "[]uint16", "[]uint32":
+		return []string{"strconv"}
+	case "[]uint64":
+		return []string{"strconv"}
+	case "string":
+		return []string{}
+	default:
+		return []string{"fmt"}
+	}
+}
