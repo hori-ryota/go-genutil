@@ -120,3 +120,34 @@ func (w AstPkgWalker) ToFile(node ast.Node) *ast.File {
 	}
 	return nil
 }
+
+func (w AstPkgWalker) FindTypeSpec(filter func(*ast.TypeSpec) bool) *ast.TypeSpec {
+	for _, spec := range w.AllTypeSpecs() {
+		if filter(spec) {
+			return spec
+		}
+	}
+	return nil
+}
+
+func (w AstPkgWalker) AllFuncDecls() []*ast.FuncDecl {
+	decls := w.Decls
+	l := make([]*ast.FuncDecl, 0, len(decls))
+	for _, decl := range decls {
+		decl, ok := decl.(*ast.FuncDecl)
+		if !ok {
+			continue
+		}
+		l = append(l, decl)
+	}
+	return l
+}
+
+func (w AstPkgWalker) FindFuncDecl(filter func(*ast.FuncDecl) bool) *ast.FuncDecl {
+	for _, decl := range w.AllFuncDecls() {
+		if filter(decl) {
+			return decl
+		}
+	}
+	return nil
+}
