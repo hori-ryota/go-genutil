@@ -120,7 +120,7 @@ func (p TypePrinter) ImportPkgs(currentPkg string) []string {
 	pkgs := make([]string, 0, 2)
 
 	ss := strings.FieldsFunc(p.FullString, func(c rune) bool {
-		return !unicode.IsLetter(c) && c != '.' && c != '/' && c != '-' && c != '_'
+		return !unicode.IsLetter(c) && !unicode.IsDigit(c) && c != '.' && c != '/' && c != '-' && c != '_'
 	})
 	for _, s := range ss {
 		if !strings.ContainsRune(s, '.') {
