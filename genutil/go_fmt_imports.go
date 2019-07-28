@@ -3,7 +3,6 @@ package genutil
 import (
 	"bytes"
 	"fmt"
-	"path"
 	"sort"
 	"strconv"
 	"strings"
@@ -35,17 +34,15 @@ func GoFmtImports(pkgs map[string]string) string {
 			return group[i] < group[j]
 		})
 		for _, pkg := range group {
-			if pathToNameMap[pkg] != path.Base(pkg) {
-				_, err := b.WriteString(pathToNameMap[pkg])
-				if err != nil {
-					panic(err)
-				}
-				_, err = b.WriteRune(' ')
-				if err != nil {
-					panic(err)
-				}
+			_, err := b.WriteString(pathToNameMap[pkg])
+			if err != nil {
+				panic(err)
 			}
-			_, err := b.WriteString(strconv.Quote(pkg))
+			_, err = b.WriteRune(' ')
+			if err != nil {
+				panic(err)
+			}
+			_, err = b.WriteString(strconv.Quote(pkg))
 			if err != nil {
 				panic(err)
 			}

@@ -53,3 +53,21 @@ func FuncToArgs(f *types.Func) []*types.Var {
 	}
 	return args
 }
+
+func PrintTypeNameWithPackgeNameIfNeeded(t types.Type) string {
+	switch t := t.(type) {
+	case *types.Named:
+		return t.Obj().Pkg().Name() + "." + t.Obj().Name()
+	default:
+		return t.String()
+	}
+}
+
+func PrintTypeName(t types.Type) string {
+	switch t := t.(type) {
+	case *types.Named:
+		return t.Obj().Name()
+	default:
+		return t.String()
+	}
+}

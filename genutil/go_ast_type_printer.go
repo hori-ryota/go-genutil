@@ -9,6 +9,7 @@ import (
 	"unicode"
 )
 
+// TODO type alias
 type TypePrinter struct {
 	FullString string
 }
