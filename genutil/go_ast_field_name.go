@@ -14,6 +14,10 @@ func ParseFieldName(field *ast.Field) string {
 			return t.Name
 		case *ast.SelectorExpr:
 			return t.Sel.Name
+		case *ast.StarExpr:
+			i := t.X.(*ast.Ident)
+			return i.Name
+
 		default:
 			panic(fmt.Errorf(
 				"failed to parse FieldType: unknown %s",
