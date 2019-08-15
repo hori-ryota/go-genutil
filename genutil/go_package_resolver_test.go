@@ -3,7 +3,7 @@ package genutil_test
 import (
 	"testing"
 
-	"github.com/hori-ryota/go-genutil/genutil"
+	"github.com/GuiltyMorishita/go-genutil/genutil"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,15 +14,15 @@ func TestLocalPathToPackagePath(t *testing.T) {
 	}{
 		{
 			s: ".",
-			t: "github.com/hori-ryota/go-genutil/genutil",
+			t: "github.com/GuiltyMorishita/go-genutil/genutil",
 		},
 		{
 			s: "..",
-			t: "github.com/hori-ryota/go-genutil",
+			t: "github.com/GuiltyMorishita/go-genutil",
 		},
 		{
 			s: "../genutil",
-			t: "github.com/hori-ryota/go-genutil/genutil",
+			t: "github.com/GuiltyMorishita/go-genutil/genutil",
 		},
 	} {
 		tt := tt

@@ -67,7 +67,11 @@ func resolveTypeFullString(importMap map[string]string, currentPkg string, typeN
 	default:
 		ss := strings.SplitN(word, ".", 2)
 		if pkgPath, ok := importMap[ss[0]]; ok {
-			word = pkgPath + "." + ss[1]
+			if path.Base(pkgPath) != ss[0] {
+				word = pkgPath + "," + ss[0] + "." + ss[1]
+			} else {
+				word = pkgPath + "." + ss[1]
+			}
 		}
 	}
 
@@ -113,6 +117,11 @@ func (p TypePrinter) print(fullPath string, currentPkg string) string {
 		word = strings.TrimPrefix(path.Ext(word), ".")
 	}
 
+	if strings.ContainsRune(word, ',') {
+		ss := strings.SplitN(word, ",", 2)
+		return ss[1] + p.print(fullPath[ind:], currentPkg)
+	}
+
 	return path.Base(word) + p.print(fullPath[ind:], currentPkg)
 }
 
@@ -120,8 +129,9 @@ func (p TypePrinter) ImportPkgs(currentPkg string) []string {
 	pkgs := make([]string, 0, 2)
 
 	ss := strings.FieldsFunc(p.FullString, func(c rune) bool {
-		return !unicode.IsLetter(c) && !unicode.IsDigit(c) && c != '.' && c != '/' && c != '-' && c != '_'
+		return !unicode.IsLetter(c) && !unicode.IsDigit(c) && c != '.' && c != '/' && c != '-' && c != '_' && c != ','
 	})
+
 	for _, s := range ss {
 		if !strings.ContainsRune(s, '.') {
 			continue
@@ -129,6 +139,10 @@ func (p TypePrinter) ImportPkgs(currentPkg string) []string {
 		pkgPath := strings.TrimSuffix(s, path.Ext(s))
 		if currentPkg == pkgPath {
 			continue
+		}
+		if strings.ContainsRune(pkgPath, ',') {
+			ssn := strings.SplitN(pkgPath, ",", 2)
+			pkgPath = ssn[1] + "," + ssn[0]
 		}
 		pkgs = append(pkgs, pkgPath)
 	}
@@ -139,6 +153,11 @@ func (p TypePrinter) ImportPkgMap(currentPkg string) map[string]string {
 	pkgs := p.ImportPkgs(currentPkg)
 	m := make(map[string]string, len(pkgs))
 	for _, pkg := range pkgs {
+		if strings.ContainsRune(pkg, ',') {
+			ssn := strings.SplitN(pkg, ",", 2)
+			m[ssn[0]] = ssn[1]
+			continue
+		}
 		m[path.Base(pkg)] = pkg
 	}
 	return m
